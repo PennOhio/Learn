@@ -7,5 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "property")
 data class Property(
         @PrimaryKey(autoGenerate = true) val uid: Int = 0,
-        @ColumnInfo(name = "address") val address: String
+        @ColumnInfo(name = "address") val address: String,
+        @ColumnInfo(name = "numberOne") val numberOne: Int,
+        @ColumnInfo(name = "numberTwo") val numberTwo: Int
+
 )

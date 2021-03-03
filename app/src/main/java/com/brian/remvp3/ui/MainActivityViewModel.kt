@@ -20,8 +20,8 @@ class MainActivityViewModel @Inject constructor(private val repository: Reposito
 
     fun getPropertyListLiveData() = propertyList
 
-    fun saveData(address: String) {
-        val property = Property(address = address)
+    fun saveData(address: String, numberOne: Int, numberTwo: Int) {
+        val property = Property(address = address,numberOne = numberOne, numberTwo = numberTwo)
         viewModelScope.launch {
             repository.insert(property)
         }

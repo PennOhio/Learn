@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
 
     private var address = ""
 
+    private var numberOne = ""
+
+    private var numberTwo = ""
+
     private val mainActivityViewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +48,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveDataInRoom() {
-        if (address.isBlank()) {
+        if (address.isBlank() || numberOne.isBlank() || numberTwo.isBlank()) {
             Toast.makeText(this, "Empty data", Toast.LENGTH_SHORT).show()
         } else {
-            mainActivityViewModel.saveData(address)
+            mainActivityViewModel.saveData(address, numberOne.toInt(), numberTwo.toInt())
             binding.address.setText("")
+            binding.numberOne.setText("")
+            binding.numberTwo.setText("")
+
         }
     }
 
@@ -78,7 +85,33 @@ class MainActivity : AppCompatActivity() {
                 address = s.toString()
             }
         })
+
+        binding.numberOne.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                numberOne = s.toString()
+            }
+        })
+
+        binding.numberTwo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                numberTwo = s.toString()
+            }
+        })
     }
+
+
 
 
 }
