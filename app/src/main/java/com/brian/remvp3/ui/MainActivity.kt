@@ -6,8 +6,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.brian.remvp3.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.StringBuilder
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,19 +26,43 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpListener()
         setUpClickListener()
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        mainActivityViewModel.getPropertyListLiveData()
+            .observe(this, Observer { propertyList ->
+                propertyList?.let {
+                    val stringBuilder = StringBuilder()
+                    it.forEach { property ->
+                        stringBuilder.append(property.address)
+                        stringBuilder.append("\n")
+                    }
+                    binding.displayAddress.text = stringBuilder.toString()
+                }
+            })
     }
 
     private fun saveDataInRoom() {
         if (address.isBlank()) {
             Toast.makeText(this, "Empty data", Toast.LENGTH_SHORT).show()
         } else {
-            mainActivityViewModel.saveData()
+            mainActivityViewModel.saveData(address)
+            binding.address.setText("")
         }
+    }
+
+    private fun getAddressFromDB() {
+        mainActivityViewModel.getAll()
     }
 
     private fun setUpClickListener() {
         binding.submit.setOnClickListener {
             saveDataInRoom()
+        }
+
+        binding.getAddress.setOnClickListener {
+            getAddressFromDB()
         }
     }
 

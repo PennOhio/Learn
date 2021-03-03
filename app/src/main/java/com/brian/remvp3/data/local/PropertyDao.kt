@@ -9,11 +9,11 @@ import androidx.room.Query
 interface PropertyDao {
 
     @Query("SELECT * FROM property")
-    fun getAll(): List<Property>
+    suspend fun getAll(): List<Property>
 
     @Insert
-    fun insert(property: Property)
+    suspend fun insert(property: Property)
 
     @Delete
-    fun delete(property: Property)
+    suspend fun delete(property: Property)
 }
